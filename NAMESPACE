@@ -1,0 +1,7 @@
+export(mubz.copula, mubz.lnormal, mubz.normal, build.clusters.spatial, dens.grid.maxstable, dens.grid.excess, dens.grid.simultoccur, excess.censor, excess.l, maxstable.l.clusters, plot3d.densgrid, simultoccur.l, rCMS, rSchlatherExcess, select.mean, maxgrid, maxblocks, maxlik.maxstable, maxlik.excess, maxlik.simultoccur, spatialWhittleMatern, spatialCauchy, spatialPower, spatialPowerexp, spatialBessel, marginExp, marginFrechet, marginGPD, marginGamma, marginLnorm, marginUnif, marginWeibull)
+importFrom(partitions,setparts)
+importFrom(maxLik,maxLik)
+importFrom(mnormt,pmnorm)
+importFrom(mnormpow,pmnormpow)
+importFrom(VGAM,dfrechet,pfrechet,qfrechet,dgpd,pgpd,qgpd)
+import(copula,methods)
