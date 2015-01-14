@@ -22,6 +22,9 @@ maxlik.simultoccur(...)}
       }
       \item{\code{start}}{a vector giving the initial values of the
 	parameters}
+      \item{\code{trace}}{when \code{TRUE}, prints the values where the
+	likelihood function is evaluated}
+      \item{\code{iterlim}}{the maximum number of iterations}
     }
   }
 }
@@ -35,7 +38,7 @@ maxlik.simultoccur(...)}
 \examples{
 # ML estimation for a sample from a Schlather max-stable distribution
 # (Use larger values for n.site and n.obs to get good results!)
-n.site<-3
+n.site<-2
 n.obs<-2
 xy<-matrix(runif(2 * n.site, 0, 0.5), ncol = 2)
 param<-c(0.5,1.5)
@@ -50,49 +53,54 @@ ml<-maxlik.maxstable(data,params=c(NA,NA),start=c(1,1),
 \donttest{
 # ML estimation for a sample in the max domain of attraction
 # of from an homogeneous clustered max-stable distribution
+#
+# WARNING: these exemples are quite time-consuming, but yet need
+# larger values for n and the dimensions for correct results
 
 # A) using excess
 
 raw.data<-rCMS(copulas=c(copClayton,copGumbel),
                margins=c(marginLnorm,marginFrechet),
-               classes=c(rep(1,10),rep(2,10)),
-               params=c(0.5,1,1.5,1.7),n=1000)
+               classes=c(rep(1,3),rep(2,3)),
+               params=c(0.5,1,1.5,1.7),n=20)
 data<-excess.censor(raw.data)
 d<-dens.grid.excess(data,c(NA,1,NA,1.7),
-                    seq(0.1,1,length=10),seq(1,2,length=10),
+                    seq(0.1,1,length=5),seq(1,2,length=5),
                     category="copula",
                     copulas=c(copClayton,copGumbel),
                     margins=c(marginLnorm,marginFrechet),
-                    classes=c(rep(1,10),rep(2,10)))
+                    classes=c(rep(1,3),rep(2,3)))
 plot3d.densgrid(d)
 ml<-maxlik.excess(data,
-                   params=c(NA,NA,NA,NA),start=c(0.5,1,1.5,1.7),
-                   category="copula",
-                   copulas=c(copClayton,copGumbel),
-                   margins=c(marginLnorm,marginFrechet),
-                   classes=c(rep(1,10),rep(2,10)))
+                  params=c(NA,NA,NA,NA),start=c(0.5,1,1.5,1.7),
+                  trace=TRUE,iterlim=20,
+                  category="copula",
+                  copulas=c(copClayton,copGumbel),
+                  margins=c(marginLnorm,marginFrechet),
+                  classes=c(rep(1,3),rep(2,3)))
 
 # B) using block maxima with occurences
 
 raw.data<-rCMS(copulas=c(copClayton,copGumbel),
                margins=c(marginLnorm,marginFrechet),
-               classes=c(rep(1,10),rep(2,10)),
-               params=c(0.5,1,1.5,1.7),n=1000)
-data<-maxblocks(raw.data,n.blocks=20)
+               classes=c(rep(1,3),rep(2,3)),
+               params=c(0.5,1,1.5,1.7),n=10)
+data<-maxblocks(raw.data,n.blocks=2)
 d<-dens.grid.simultoccur(data$normalized.max,occur=data$classes.max,
                          c(NA,1,NA,1.7),
-                         seq(0.1,1,length=10),seq(1,2,length=10),
+                         seq(0.1,1,length=5),seq(1,2,length=5),
                          category="copula",
                          copulas=c(copClayton,copGumbel),
                          margins=c(marginLnorm,marginFrechet),
-                         classes=c(rep(1,10),rep(2,10)))
+                         classes=c(rep(1,3),rep(2,3)))
 plot3d.densgrid(d)
 ml<-maxlik.simultoccur(data$normalized.max,
-                        params=c(NA,NA,NA,NA),start=c(0.5,1,1.5,1.7),
-                        occur=data$classes.max,
-                        category="copula",
-                        copulas=c(copClayton,copGumbel),
-                        margins=c(marginLnorm,marginFrechet),
-                        classes=c(rep(1,10),rep(2,10)))
+                       params=c(NA,NA,NA,NA),start=c(0.5,1,1.5,1.7),
+                       trace=TRUE,iterlim=20,
+                       occur=data$classes.max,
+                       category="copula",
+                       copulas=c(copClayton,copGumbel),
+                       margins=c(marginLnorm,marginFrechet),
+                       classes=c(rep(1,3),rep(2,3)))
 }
 }

@@ -33,9 +33,11 @@ raw.data<-rCMS(copulas=c(copClayton,copGumbel),
                params=c(0.5,1,1.5,1.7),n=50)
 data<-excess.censor(raw.data)
 
+\donttest{
 d<-excess.l(data,params=c(0.5,1,1.5,1.7),
             category="copula",
             copulas=c(copClayton,copGumbel),
             margins=c(marginLnorm,marginFrechet),
             classes=c(rep(1,4),rep(2,4)))
+}
 }

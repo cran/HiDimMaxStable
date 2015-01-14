@@ -16,6 +16,6 @@ excess.censor(z,t=10)
 raw.data<-rCMS(copulas=c(copClayton,copGumbel),
                margins=c(marginLnorm,marginFrechet),
                classes=c(rep(1,10),rep(2,10)),
-               params=c(0.5,1,1.5,1.7),n=1000)
+               params=c(0.5,1,1.5,1.7),n=100)
 data<-excess.censor(raw.data)
 }

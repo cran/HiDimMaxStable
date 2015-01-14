@@ -44,8 +44,10 @@ dens.grid.simultoccur(...)
   \code{\link{plot3d.densgrid}} for a 3D visualisation of the computed values of the log-likelihood.
 }
 \examples{
+\donttest{
 # Log density of the Max-stable distribution of the Schlather process
 # with the Whittle Matern correlation function
+# Use larger values for n.site and n.obs for better results
 n.site<-3
 n.obs<-2
 xy<-matrix(runif(2*n.site,0,2),ncol=2)
@@ -59,14 +61,14 @@ d<-dens.grid.maxstable(data,c(NA,NA),seq(0.1,1,length=5),seq(1,2,length=5),
     spatial=list(sites=xy,family=spatialWhittleMatern),
     parallel=FALSE,
     clusters=cl)
-\donttest{plot3d.densgrid(d)}
+plot3d.densgrid(d)
 
-\donttest{
 #  Log density of the Max-stable distribution of the Brown Resnick process
-n.site<-100
+# Use larger values for n.site and n.obs for better results
+n.site<-4
+n.obs<-3
 xy<-matrix(runif(2 * n.site, 0, 2), ncol = 2)
 param<-c(0.5,1)
-n.obs<-20
 library(SpatialExtremes)
 data<-t(rmaxstab(n.obs, xy, cov.mod = "brown", range = param[1], smooth = param[2]))
 cl<-build.clusters.spatial(xy)
@@ -83,42 +85,45 @@ plot3d.densgrid(d)
 
 #   Log density of the distribution of the vector of excesses for an
 # homogeneous clustered max-stable distribution
-# 
+# Use larger values for n and dimensions for better results
 raw.data<-rCMS(copulas=c(copClayton,copGumbel),
     margins=c(marginLnorm,marginFrechet),
-    classes=c(rep(1,50),rep(2,50)),
-    params=c(0.5,1,1.5,1.7),n=1000)
+    classes=c(rep(1,4),rep(2,4)),
+    params=c(0.5,1,1.5,1.7),n=10)
 data<-excess.censor(raw.data)
 library(snowfall)
-sfInit(parallel=TRUE,cpus=48)
+sfInit(parallel=TRUE,cpus=4)
 sfLibrary(HiDimMaxStable)
+sfLibrary(VGAM)
 d<-dens.grid.excess(data,c(NA,1,NA,1.7),
     seq(0.1,1,length=5),seq(1,2,length=5),
     category="copula",
     copulas=c(copClayton,copGumbel),
     margins=c(marginLnorm,marginFrechet),
             parallel=TRUE,
-    classes=c(rep(1,50),rep(2,50)))
+    classes=c(rep(1,4),rep(2,4)))
 sfStop()
 plot3d.densgrid(d)
     
 # Log density of the distribution of the componentwise maxima
 # with occurences for an homogeneous clustered max-stable distribution
+# Use larger values for n and dimensions for better results
 raw.data<-rCMS(copulas=c(copClayton,copGumbel),
     margins=c(marginLnorm,marginFrechet),
-    classes=c(rep(1,50),rep(2,50)),
-    params=c(0.5,1,1.5,1.7),n=1000)
-data<-maxblocks(raw.data,n.blocks=20)
+    classes=c(rep(1,2),rep(2,2)),
+    params=c(0.5,1,1.5,1.7),n=10)
+data<-maxblocks(raw.data,n.blocks=2)
 library(snowfall)
 sfInit(parallel=TRUE,cpus=4)
 sfLibrary(HiDimMaxStable)
+sfLibrary(VGAM)
 d<-dens.grid.simultoccur(data$normalized.max,occur=data$classes.max,
     c(NA,1,NA,1.7),
     seq(0.1,1,length=5),seq(1,2,length=5),
     category="copula",
     copulas=c(copClayton,copGumbel),
     margins=c(marginLnorm,marginFrechet),
-    classes=c(rep(1,50),rep(2,50)),
+    classes=c(rep(1,2),rep(2,2)),
     parallel=TRUE)
 sfStop()
 plot3d.densgrid(d)

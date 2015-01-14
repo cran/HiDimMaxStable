@@ -13,14 +13,14 @@
   \code{\link{plot3d.densgrid}} for a 3D visualisation of the computed values on the grid.
 }
 \examples{
-n.site<-3
+n.site<-2
 xy<-matrix(runif(2 * n.site, 0, 0.5), ncol = 2)
 param<-c(0.5,1.5)
 n.obs<-2
 library(SpatialExtremes)
 data<-t(rmaxstab(n.obs, xy, "whitmat",
                  nugget = 0, range = param[1], smooth = param[2]))
-d<-dens.grid.maxstable(data,c(NA,NA),seq(0.1,1,length=5),seq(1,2,length=5),
+d<-dens.grid.maxstable(data,c(NA,NA),seq(0.1,1,length=3),seq(1,2,length=3),
                        category="normal",
                        spatial=list(sites=xy,family=spatialWhittleMatern))
 maxgrid(d)$xy

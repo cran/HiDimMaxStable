@@ -1,6 +1,6 @@
 Package: HiDimMaxStable
-Version: 0.1
-Date: 2014-10-07
+Version: 0.1.1
+Date: 2015-01-14
 Encoding: UTF-8
 Title: Inference on High Dimensional Max-Stable Distributions
 Authors@R: c(person("Alexis","Bienvenüe",role=c("aut","cre"),
@@ -15,10 +15,10 @@ Description: Inference of high dimensional max-stable
  and C. Robert, arXiv:1403.0065 [stat.AP].
 License: GPL (>= 2)
 URL: http://arxiv.org/abs/1403.0065
-Packaged: 2014-10-08 19:15:57 UTC; alexis
+Packaged: 2015-01-14 10:16:17 UTC; alexis
 Author: Alexis Bienvenüe [aut, cre],
   Christian Robert [aut]
 Maintainer: Alexis Bienvenüe <alexis.bienvenue@univ-lyon1.fr>
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2014-10-08 21:57:23
+Date/Publication: 2015-01-14 12:30:22

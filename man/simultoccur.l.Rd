@@ -28,10 +28,11 @@ simultoccur.l(data,occur,ln=FALSE,...)
 %\details{}
 \seealso{\code{\link{mubz.normal}},\code{\link{mubz.lnormal}}, \code{\link{mubz.copula}}.}
 \examples{
+\donttest{
 raw.data<-rCMS(copulas=c(copClayton,copGumbel),
                margins=c(marginLnorm,marginFrechet),
                classes=c(rep(1,3),rep(2,3)),
-               params=c(0.5,1,1.5,1.7),n=10)
+               params=c(0.5,1,1.5,1.7),n=20)
 
 data<-maxblocks(raw.data,n.blocks=3)
 
@@ -41,4 +42,5 @@ d<-simultoccur.l(data$normalized.max,occur=data$classes.max,
             copulas=c(copClayton,copGumbel),
             margins=c(marginLnorm,marginFrechet),
             classes=c(rep(1,3),rep(2,3)))
+}
 }
